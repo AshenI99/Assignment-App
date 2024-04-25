@@ -67,8 +67,13 @@ const App = () => {
         <div className="app-holder">
             {isLoading ?
                 <Loader/>
+            : errorMessage ?
+                <>
+                    <ErrorPopup message={errorMessage} />
+                    <div className="error-div page-center-content">{errorMessage}. Try again</div>
+                </>
             :
-            ""
+                ""
             }
 
         </div>

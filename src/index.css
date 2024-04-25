@@ -1,3 +1,18 @@
+/* Set the website to take full height */
 html, body, #root, .app-holder {
     height: 100vh;
+}
+
+
+/* Center content */
+.page-center-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Error div */
+.error-div {
+    height: 300px;
 }
