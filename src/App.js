@@ -1,25 +1,71 @@
-import logo from './logo.svg';
-import './App.css';
+import {useEffect, useState} from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+const App = () => {
+
+    // Save relevant chart data
+    const [incomeData, setIncomeData] = useState({
+        netIncome: [],
+        totalRevenue: [],
+        totalEquity: []
+    });
+
+    // Loading State of the app
+    const [isLoading, setIsLoading] = useState(true);
+
+    // Error state of the app
+    const [errorMessage, setErrorMessage] = useState("");
+
+
+    // Fetch data when the page loads
+    useEffect(() => {
+        fetchData();
+    }, [])
+
+    const fetchData= async () => {
+        setIsLoading(true);
+
+        try {
+            const income_sheet = await fetch("https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol=IBM&apikey=demo");
+            const income_data = await income_sheet.json();
+
+            const balance_sheet = await fetch("https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol=IBM&apikey=demo");
+            const balance_data = await balance_sheet.json();
+
+            setIncomeData({
+                netIncome: income_data?.quarterlyReports?.map((el) => {
+                    return {
+                        date: el?.fiscalDateEnding,
+                        data: el?.netIncome
+                    }
+                }),
+                totalRevenue: income_data?.quarterlyReports?.map((el) => {
+                    return {
+                        date: el?.fiscalDateEnding,
+                        data: el?.totalRevenue
+                    }
+                }),
+                totalEquity: balance_data?.quarterlyReports?.map((el) => {
+                    return {
+                        date: el?.fiscalDateEnding,
+                        data: el?.totalShareholderEquity
+                    }
+                })
+            })
+        } catch (err) {
+            // Set error message
+            setErrorMessage(err.message)
+        } finally {
+            setIsLoading(false);
+        }
+
+    }
+
+    return (
+        <div>
+            {isLoading ? "Loading" : ""}
+        </div>
+    );
 }
 
 export default App;
