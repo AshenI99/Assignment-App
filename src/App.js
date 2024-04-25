@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import Loader from "./components/Loader/Loader";
 import ErrorPopup from "./components/ErrorPopup/ErrorPopup";
+import {Navbar} from "react-bootstrap";
 
 
 const App = () => {
@@ -67,13 +68,21 @@ const App = () => {
         <div className="app-holder">
             {isLoading ?
                 <Loader/>
-            : errorMessage ?
-                <>
-                    <ErrorPopup message={errorMessage} />
-                    <div className="error-div page-center-content">{errorMessage}. Try again</div>
-                </>
             :
-                ""
+                <div className="app-content">
+                    <Navbar expand="lg" className="navbar-custom">
+                        <Navbar.Brand className="ps-3 text-white" href="#">Stock Scanner</Navbar.Brand>
+                    </Navbar>
+
+                    {errorMessage ?
+                        <>
+                            <ErrorPopup message={errorMessage} />
+                            <div className="error-div page-center-content text-white">{errorMessage}. Try again</div>
+                        </>
+                    :
+                        ""
+                    }
+                </div>
             }
 
         </div>

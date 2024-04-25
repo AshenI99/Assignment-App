@@ -6,7 +6,7 @@ const Loader = () => {
 
     return (
         <div className='full-screen-loader page-center-content'>
-            <Spinner animation="border" size="xl">
+            <Spinner animation="border" size="xl" variant="light">
                 <span className="visually-hidden">Loading...</span>
             </Spinner>
         </div>

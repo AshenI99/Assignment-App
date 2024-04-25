@@ -1,6 +1,7 @@
 /* Set the website to take full height */
 html, body, #root, .app-holder {
     height: 100vh;
+    background-color: #222734;
 }
 
 
@@ -15,4 +16,11 @@ html, body, #root, .app-holder {
 /* Error div */
 .error-div {
     height: 300px;
+}
+
+
+/* Navbar Styles */
+.navbar-custom {
+    height: 75px;
+    background-color: #262B3C;
 }
