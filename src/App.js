@@ -4,9 +4,11 @@ import {Navbar} from "react-bootstrap";
 import Loader from "./components/Loader/Loader";
 import Searchbar from "./components/Searchbar/Searchbar";
 import ErrorPopup from "./components/ErrorPopup/ErrorPopup";
+import Chart from "./components/Chart/Chart";
 
 
-const APIKEY = "demo";
+const APIKEY = "L0Z4LDZKP78XA827";
+
 
 const App = () => {
 
@@ -22,6 +24,13 @@ const App = () => {
 
     // Error state of the app
     const [errorMessage, setErrorMessage] = useState("");
+
+
+
+    // Fetch data when the page loads
+    useEffect(() => {
+        fetchData("IBM")
+    }, [])
 
     const fetchData= async (stockValue) => {
         setIsLoading(true);
@@ -43,20 +52,20 @@ const App = () => {
             setIncomeData({
                 netIncome: income_data?.quarterlyReports?.map((el) => {
                     return {
-                        date: el?.fiscalDateEnding,
-                        data: el?.netIncome
+                        x: new Date(el?.fiscalDateEnding).getTime(),
+                        y: el?.netIncome
                     }
                 }),
                 totalRevenue: income_data?.quarterlyReports?.map((el) => {
                     return {
-                        date: el?.fiscalDateEnding,
-                        data: el?.totalRevenue
+                        x: new Date(el?.fiscalDateEnding).getTime(),
+                        y: el?.totalRevenue
                     }
                 }),
                 totalEquity: balance_data?.quarterlyReports?.map((el) => {
                     return {
-                        date: el?.fiscalDateEnding,
-                        data: el?.totalShareholderEquity
+                        x: new Date(el?.fiscalDateEnding).getTime(),
+                        y: el?.totalShareholderEquity
                     }
                 })
             })
@@ -69,8 +78,6 @@ const App = () => {
             setIsLoading(false);
         }
     }
-
-    console.log(errorMessage)
 
     const onSearchClickHandling = (value) => {
         fetchData(value);
@@ -95,7 +102,11 @@ const App = () => {
                             <div className="error-div page-center-content text-white">{errorMessage}. Try again</div>
                         </>
                         :
-                        ""
+                        <>
+                            <Chart data={incomeData.netIncome} color="#34C38F" topic="Quarterly Net Income" />
+                            <Chart data={incomeData.totalRevenue} color="#F1B44C" topic="Quarterly Total Revenue" />
+                            <Chart data={incomeData.totalEquity} color="#F46A6A" topic="Quarterly Total Shareholder Equity" />
+                        </>
                     }
                 </div>
             </div>

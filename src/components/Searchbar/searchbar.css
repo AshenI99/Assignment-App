@@ -5,3 +5,8 @@
 .searchbar-container input {
     max-width: 250px;
 }
+
+.searchbar-container button {
+    background-color: #556EE6 !important;
+    border-color: #556EE6 !important;
+}
