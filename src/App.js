@@ -7,11 +7,11 @@ import ErrorPopup from "./components/ErrorPopup/ErrorPopup";
 import Chart from "./components/Chart/Chart";
 
 
-const APIKEY = "L0Z4LDZKP78XA827";
+const APIKEY = process.env.REACT_APP_API_KEY;;
 
 
 const App = () => {
-
+console.log(APIKEY)
     // Save relevant chart data
     const [incomeData, setIncomeData] = useState({
         netIncome: [],
