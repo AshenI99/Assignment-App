@@ -1,4 +1,6 @@
 import {useEffect, useState} from "react";
+import Loader from "./components/Loader/Loader";
+import ErrorPopup from "./components/ErrorPopup/ErrorPopup";
 
 
 const App = () => {
@@ -62,8 +64,13 @@ const App = () => {
     }
 
     return (
-        <div>
-            {isLoading ? "Loading" : ""}
+        <div className="app-holder">
+            {isLoading ?
+                <Loader/>
+            :
+            ""
+            }
+
         </div>
     );
 }
